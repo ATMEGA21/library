@@ -373,16 +373,16 @@ void updateDisplay() {
 
 # 11. Automatic sump and overhead tank 
 
-const int lowLevelButtonPin = 2;       // Button to detect low water level
-const int highLevelButtonPin = 3;      // Button to detect high water level
-const int additionalButton1Pin = 4;    // Additional button 1
-const int additionalButton2Pin = 5;    // Additional button 2
-const int motorPin = 8;                 // Motor (buzzer) pin
-const int lowLevelLedPin = 9;          // LED for low-level button
-const int additionalLedPin = 10;       // LED for additional buttons
+const int lowLevelButtonPin = 2;
+const int highLevelButtonPin = 3;
+const int additionalButton1Pin = 4;
+const int additionalButton2Pin = 5;
+const int motorPin = 8;
+const int lowLevelLedPin = 9;
+const int additionalLedPin = 10;
 
-int lowLevelStatus = 0; // Variable to store low-level status (0 - off, 1 - on)
-int additionalStatus = 0; // Variable to store additional buttons status (0 - off, 1 - on)
+int lowLevelStatus = 0;
+int additionalStatus = 0;
 
 void setup() {
   pinMode(lowLevelButtonPin, INPUT);
@@ -392,56 +392,43 @@ void setup() {
   pinMode(motorPin, OUTPUT);
   pinMode(lowLevelLedPin, OUTPUT);
   pinMode(additionalLedPin, OUTPUT);
-
-  // Initialize Serial communication if needed
-  // Serial.begin(9600);
 }
 
 void loop() {
-  // Check if the low-level button is pressed
   if (digitalRead(lowLevelButtonPin) == LOW && lowLevelStatus == 0) {
-    lowLevelStatus = 1; // Set low-level status to on
-    digitalWrite(motorPin, HIGH); // Turn on motor (buzzer)
-    blinkLed(lowLevelLedPin); // Blink LED for low-level button
+    lowLevelStatus = 1;
+    digitalWrite(motorPin, HIGH);
+    blinkLed(lowLevelLedPin);
   }
 
-  // Check if the high-level button is pressed to turn off low-level status
   if (digitalRead(highLevelButtonPin) == LOW && lowLevelStatus == 1) {
-    lowLevelStatus = 0; // Set low-level status to off
-    digitalWrite(motorPin, LOW); // Turn off motor (buzzer)
-    digitalWrite(lowLevelLedPin, LOW); // Turn off LED for low-level button
+    lowLevelStatus = 0;
+    digitalWrite(motorPin, LOW);
+    digitalWrite(lowLevelLedPin, LOW);
   }
 
-  // Check if additional button 1 is pressed
   if (digitalRead(additionalButton1Pin) == LOW && additionalStatus == 0) {
-    additionalStatus = 1; // Set additional status to on
-    digitalWrite(motorPin, HIGH); // Turn on motor (buzzer)
-    blinkLed(additionalLedPin); // Blink LED for additional buttons
+    additionalStatus = 1;
+    digitalWrite(motorPin, HIGH);
+    blinkLed(additionalLedPin);
   }
 
-  // Check if additional button 2 is pressed to turn off additional status
   if (digitalRead(additionalButton2Pin) == LOW && additionalStatus == 1) {
-    additionalStatus = 0; // Set additional status to off
-    digitalWrite(motorPin, LOW); // Turn off motor (buzzer)
-    digitalWrite(additionalLedPin, LOW); // Turn off LED for additional buttons
+    additionalStatus = 0;
+    digitalWrite(motorPin, LOW);
+    digitalWrite(additionalLedPin, LOW);
   }
-
-  // Print motor status for debugging if needed
-  // Serial.print("Low Level Status: ");
-  // Serial.print(lowLevelStatus);
-  // Serial.print(" | Additional Status: ");
-  // Serial.println(additionalStatus);
 }
 
 void blinkLed(int ledPin) {
-  // Function to blink the LED
   for (int i = 0; i < 5; i++) {
-    digitalWrite(ledPin, HIGH); // Turn on LED
-    delay(500); // Blinking delay
-    digitalWrite(ledPin, LOW); // Turn off LED
-    delay(500); // Blinking delay
+    digitalWrite(ledPin, HIGH);
+    delay(500);
+    digitalWrite(ledPin, LOW);
+    delay(500);
   }
 }
+
 
 ---------------------------------------------------------------------------------------------------
 
