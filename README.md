@@ -11,7 +11,9 @@
  9. Display the room temperature on your mobile
  10. Parking Automation
  11. Automatic sump and overhead tank 
- 12. Temperature sensor interfacing 
+ 12. Temperature sensor interfacing
+ 13. LDR
+ 14. POT
 
 
 
@@ -462,5 +464,52 @@ void loop() {
 
   delay(1000);
 }
+
+---------------------------------------------------------------------------------------------------
+
+
+# 12 LDR 
+const int ldrPin = A0;
+const int ledPin = 13;
+
+void setup() {
+  pinMode(ldrPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  int ldrValue = analogRead(ldrPin);
+
+  if (ldrValue < 500) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(100);
+}
+
+---------------------------------------------------------------------------------------------------
+
+# 13. POT to voltage values
+const int potPin = A0;
+const float referenceVoltage = 5.0;
+
+void setup() {
+  pinMode(potPin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int potValue = analogRead(potPin);
+
+  float voltage = potValue * (referenceVoltage / 1023.0);
+
+  Serial.println(voltage, 3);
+
+  delay(100);
+}
+
+---------------------------------------------------------------------------------------------------
 
 
