@@ -14,6 +14,7 @@
  12. Temperature sensor interfacing
  13. LDR
  14. POT
+ 15. Parking 
 
 
 
@@ -512,4 +513,84 @@ void loop() {
 
 ---------------------------------------------------------------------------------------------------
 
+# 14. Parking 
+#include <Servo.h>
+#include <LiquidCrystal.h>
+
+const int ledPins[] = {6, 10, 11, 12, 13, A1, A2, A3};
+const int irSensorPin = A0;
+const int exitButtonPin = 7; // Connect the push button to this digital pin
+const int servoPin = 9;
+const int rs = 0, en = 1, d4 = 2, d5 = 3, d6 = 4, d7 = 5;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+Servo gateServo;
+int vehicleCount = 0; // Start counting from 0
+bool gateOpen = false;
+
+const int irThresholdHigh = 600; // Adjust according to your setup
+const int irThresholdLow = 400;  // Adjust according to your setup
+
+void setup() {
+  for (int i = 0; i < 8; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+
+  gateServo.attach(servoPin);
+  gateServo.write(0);
+
+  lcd.begin(16, 2);
+  lcd.print("Vehicle Count: 0"); // Start with count 0
+  pinMode(exitButtonPin, INPUT_PULLUP); // Use INPUT_PULLUP to enable internal pull-up resistor
+}
+
+void loop() {
+  int irValue = analogRead(irSensorPin);
+
+  if (vehicleCount < 8) {
+    if (irValue < irThresholdLow && !gateOpen) {
+      gateServo.write(90);
+      delay(2000);
+      gateServo.write(0);
+      gateOpen = true;
+
+      digitalWrite(ledPins[vehicleCount], HIGH);
+
+      vehicleCount++;
+      updateDisplay();
+    }
+    else if (irValue >= irThresholdHigh && gateOpen) {
+      gateOpen = false;
+    }
+  }
+  else {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Parking Slots");
+
+    if (gateOpen) {
+      gateServo.write(0);
+      gateOpen = false;
+    }
+  }
+
+  // Check the exit button state
+  if (digitalRead(exitButtonPin) == LOW && vehicleCount > 0) {
+    gateServo.write(90);
+    delay(2000);
+    gateServo.write(0);
+    gateOpen = true;
+
+    digitalWrite(ledPins[vehicleCount - 1], LOW);
+    vehicleCount--;
+    updateDisplay();
+  }
+}
+
+void updateDisplay() {
+  lcd.setCursor(14, 0); // Position the cursor to update vehicle count
+  lcd.print("   "); // Clear the previous count
+  lcd.setCursor(14, 0);
+  lcd.print(vehicleCount); // Display the updated count
+}
 
