@@ -1,5 +1,6 @@
-# 
-1. Detecting metallic and nonmetallic object in Arduino
+# Title 
+
+ 1. Detecting metallic and nonmetallic object in Arduino
  2. Sound sensor
  3. Temperature 27 and 25 
  4. Sliding door of Shoping mall
