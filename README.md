@@ -290,17 +290,18 @@ void loop() {
 
 const int ledPins[] = {6, 10, 11, 12, 13, A1, A2, A3};
 const int irSensorPin = A0;
-const int exitButtonPin = 7; // Connect the push button to this digital pin
+const int exitButtonPin = 7;
 const int servoPin = 9;
 const int rs = 0, en = 1, d4 = 2, d5 = 3, d6 = 4, d7 = 5;
+
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 Servo gateServo;
-int vehicleCount = 0; // Start counting from 0
+int vehicleCount = 0;
 bool gateOpen = false;
 
-const int irThresholdHigh = 600; // Adjust according to your setup
-const int irThresholdLow = 400;  // Adjust according to your setup
+const int irThresholdHigh = 600;
+const int irThresholdLow = 400;
 
 void setup() {
   for (int i = 0; i < 8; i++) {
@@ -311,8 +312,8 @@ void setup() {
   gateServo.write(0);
 
   lcd.begin(16, 2);
-  lcd.print("Vehicle Count: 0"); // Start with count 0
-  pinMode(exitButtonPin, INPUT_PULLUP); // Use INPUT_PULLUP to enable internal pull-up resistor
+  lcd.print("Vehicle Count: 0");
+  pinMode(exitButtonPin, INPUT_PULLUP);
 }
 
 void loop() {
@@ -329,12 +330,10 @@ void loop() {
 
       vehicleCount++;
       updateDisplay();
-    }
-    else if (irValue >= irThresholdHigh && gateOpen) {
+    } else if (irValue >= irThresholdHigh && gateOpen) {
       gateOpen = false;
     }
-  }
-  else {
+  } else {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Parking Slots");
@@ -345,7 +344,6 @@ void loop() {
     }
   }
 
-  // Check the exit button state
   if (digitalRead(exitButtonPin) == LOW && vehicleCount > 0) {
     gateServo.write(90);
     delay(2000);
@@ -359,11 +357,12 @@ void loop() {
 }
 
 void updateDisplay() {
-  lcd.setCursor(14, 0); // Position the cursor to update vehicle count
-  lcd.print("   "); // Clear the previous count
   lcd.setCursor(14, 0);
-  lcd.print(vehicleCount); // Display the updated count
+  lcd.print(" ");
+  lcd.setCursor(14, 0);
+  lcd.print(vehicleCount);
 }
+
 
 ---------------------------------------------------------------------------------------------------
 
