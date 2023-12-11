@@ -1,17 +1,18 @@
-# 1. Detecting metallic and nonmetallic object in Arduino
-# 2. Sound sensor
-# 3. Temperature 27 and 25 
-# 4. Sliding door of Shoping mall
-# 5. Sliding door using RFID tag
-# 6. Wavy moving robot using onstacle sensing
-# 7. Automatic room light using LDR
-# 8. pH value of orange juice if less than 6.7 add neutralizing agent till the ph reduce to 5.7
-# 9. Display the room temperature on your mobile
-# 10. Parking Automation
-# 11. Automatic sump and overhead tank 
-# 12. Temperature sensor interfacing 
-#
-#
+# 
+1. Detecting metallic and nonmetallic object in Arduino
+ 2. Sound sensor
+ 3. Temperature 27 and 25 
+ 4. Sliding door of Shoping mall
+ 5. Sliding door using RFID tag
+ 6. Wavy moving robot using onstacle sensing
+ 7. Automatic room light using LDR
+ 8. pH value of orange juice if less than 6.7 add neutralizing agent till the ph reduce to 5.7
+ 9. Display the room temperature on your mobile
+ 10. Parking Automation
+ 11. Automatic sump and overhead tank 
+ 12. Temperature sensor interfacing 
+
+
 
 # 1.	Detecting metallic and nonmetallic object in Arduino
 const int sensorPin = 2;
